@@ -8,17 +8,10 @@ This example shows how to use Django 4 on Vercel with Serverless Functions using
 
 https://django-template.vercel.app/
 
-## How it Works
+## Autor
 
-Our Django application, `example` is configured as an installed application in `api/settings.py`:
+Brayan Rojas
 
-```python
-# api/settings.py
-INSTALLED_APPS = [
-    # ...
-    'example',
-]
-```
 
 We allow "\*.vercel.app" subdomains in `ALLOWED_HOSTS`, in addition to 127.0.0.1:
 
