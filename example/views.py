@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from .models import Usuario, Nivel
 from django.http import HttpResponse
 
 def index(request):
@@ -24,3 +24,18 @@ def perfil(request):
     </html>
     '''
     return HttpResponse(html) 
+
+def create(request):
+    usuar = Usuario(User="Usuario1", Puntos=0, Nivel=1, Objetivos="Objetivo1", Amistades="Amigo1")
+    usuar.save()
+    lvl = Nivel(Nombre_nivel="Nivel1", Descripcion="Descripcion del nivel 1", Puntos_Necesarios=100, usuario=usuar)
+    lvl.save()
+    html = '''
+    <html>
+        <body>
+            <h1>Crear Usuario {%lvl.usuario.usuar%}</h1>
+            <p>Esta es la pagina para crear un nuevo usuario.</p>
+        </body>
+    </html>
+    '''
+    return HttpResponse(html)
