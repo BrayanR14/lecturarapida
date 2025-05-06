@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio de Palabra Ocultada</title>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio de Palabra Ocultada</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            gap: 20px;
+        }
+        .palabra {
+            font-size: 2em;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+        .oculta {
+            opacity: 0;
+        }
+        .temporizador {
+            font-size: 1.5em;
+            color: #333;
+        }
+        .input-respuesta {
+            display: none;
+            padding: 10px;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .mensaje {
+            display: none;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="temporizador" id="temporizador">20</div>
+        <div id="palabra" class="palabra">LECTURA</div>
+        <input type="text" id="respuesta" class="input-respuesta" placeholder="Escribe la última palabra que viste">
+        <div id="mensaje" class="mensaje"></div>
+    </div>
+
+    <script>
+        const palabra = document.getElementById('palabra');
+        const temporizador = document.getElementById('temporizador');
+        const inputRespuesta = document.getElementById('respuesta');
+        const mensaje = document.getElementById('mensaje');
+        let visible = true;
+        let tiempoRestante = 20;
+        let ultimaPalabra = '';
+        
+        const palabras = [
+            "LECTURA",
+            "VELOCIDAD",
+            "COMPRENSIÓN",
+            "CONCENTRACIÓN",
+            "MEMORIA",
+            "ATENCIÓN",
+            "ENFOQUE",
+            "PRÁCTICA",
+            "HÁBITO",
+            "DISCIPLINA",
+            "PACIENCIA",
+            "PERSEVERANCIA",
+            "CONSISTENCIA",
+            "DEDICACIÓN",
+            "ESFUERZO",
+            "APRENDIZAJE",
+            "DESARROLLO",
+            "MEJORA",
+            "PROGRESO",
+            "ÉXITO"
+        ];
+
+        function obtenerPalabraAleatoria() {
+            const indice = Math.floor(Math.random() * palabras.length);
+            return palabras[indice];
+        }
+
+        function alternarPalabra() {
+            if (visible) {
+                palabra.classList.add('oculta');
+            } else {
+                ultimaPalabra = obtenerPalabraAleatoria();
+                palabra.textContent = ultimaPalabra;
+                palabra.classList.remove('oculta');
+            }
+            visible = !visible;
+        }
+
+        function actualizarTemporizador() {
+            tiempoRestante--;
+            temporizador.textContent = tiempoRestante;
+            
+            if (tiempoRestante <= 0) {
+                clearInterval(intervaloPalabras);
+                clearInterval(intervaloTemporizador);
+                palabra.classList.add('oculta');
+                inputRespuesta.style.display = 'block';
+                inputRespuesta.focus();
+            }
+        }
+
+        function verificarRespuesta() {
+            const respuesta = inputRespuesta.value.trim().toUpperCase();
+            if (respuesta === ultimaPalabra) {
+                mensaje.textContent = '¡Correcto!';
+                mensaje.style.color = 'green';
+            } else {
+                mensaje.textContent = `Incorrecto. La palabra era: ${ultimaPalabra}`;
+                mensaje.style.color = 'red';
+            }
+            mensaje.style.display = 'block';
+        }
+
+        // Iniciar la alternancia cada 2 segundos
+        const intervaloPalabras = setInterval(alternarPalabra, 2000);
+        const intervaloTemporizador = setInterval(actualizarTemporizador, 1000);
+
+        // Escuchar cuando el usuario presiona Enter en el input
+        inputRespuesta.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verificarRespuesta();
+            }
+        });
+    </script>
+</body>
+</html>

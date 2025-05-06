@@ -1,7 +1,7 @@
 from django.urls import path
-from exercises.views import index
+from exercises.views import index, ejercicio
 
 
 urlpatterns = [
-    path('', index),
+    path('', ejercicio, name='ejercicio'),
 ]

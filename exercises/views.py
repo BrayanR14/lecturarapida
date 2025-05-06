@@ -15,3 +15,7 @@ def index(request):
     result = est1.ejercicio.nombre
     
     return HttpResponse(result)
+
+
+def ejercicio(request):
+    return render(request, 'exercises/index.html')
